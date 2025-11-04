@@ -1,0 +1,109 @@
+/* Site-wide stylesheet: colors, typography, layout, responsive helpers */
+
+:root {
+  --color-primary: #1a472a;
+  --color-secondary: #5c8374;
+  --color-text: #2c4a3c;
+  --color-surface: rgba(255, 255, 255, 0.95);
+}
+
+/* Typography and base */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+body {
+  font-family: 'Georgia', serif;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Navigation - consistent across pages */
+.nav-menu {
+  position: static;
+  background-color: transparent;
+  padding: 15px 0;
+  box-shadow: none;
+  z-index: 1000;
+}
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+.nav-list li a {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 1.1em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+.nav-list li a:hover {
+  background-color: rgba(92, 131, 116, 0.1);
+  color: var(--color-primary);
+}
+.nav-list li a.active {
+  border-bottom: 2px solid var(--color-secondary);
+}
+
+/* Footer */
+.site-footer {
+  background-color: var(--color-surface);
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  margin-top: 40px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+  font-size: 0.9em;
+}
+
+/* Containers */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Cards and sections */
+.card, .welcome-card, .discover-section, .content-section, .resume-section, .career-section, .game-container, .video-section {
+  background-color: var(--color-surface);
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  color: var(--color-primary);
+}
+
+/* Game responsive tweaks */
+@media (max-width: 480px) {
+  .game-board {
+    gap: 4px;
+    padding: 8px;
+  }
+  .cell {
+    font-size: 1.8em;
+  }
+}
+
+/* Stack grids on mobile */
+@media (max-width: 768px) {
+  .content-card, .content-card.right, .content-card.left {
+    flex-direction: column !important;
+  }
+}
+

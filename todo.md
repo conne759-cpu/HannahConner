@@ -1,0 +1,4 @@
+- [x] Analyze requirements - Need to add credit under campus life video for Hannah Conner, Sadie Johnson, and Samantha Nelson
+- [x] Add credit section to discover.html under the campus life video
+- [x] Style the credit section to match the existing design
+- [x] Test the changes

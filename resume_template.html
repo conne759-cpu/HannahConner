@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hannah's Resume</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            margin: 40px;
+            color: #2c4a3c;
+            background: white;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #5c8374;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            color: #1a472a;
+            margin: 0;
+            font-weight: normal;
+        }
+        
+        .contact {
+            font-size: 1.1em;
+            color: #5c8374;
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            font-size: 1.8em;
+            color: #1a472a;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #5c8374;
+            padding-bottom: 5px;
+        }
+        
+        .job, .education-item {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #5c8374;
+            border-radius: 5px;
+        }
+        
+        .job-header, .edu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .job-title, .degree {
+            font-size: 1.2em;
+            color: #1a472a;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .date {
+            color: #5c8374;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .company, .institution {
+            color: #2c4a3c;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .responsibilities {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .responsibilities li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #2c4a3c;
+        }
+        
+        .responsibilities li:before {
+            content: "•";
+            color: #5c8374;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border-top: 3px solid #5c8374;
+        }
+        
+        .skill-category h3 {
+            color: #1a472a;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .skill-category ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .skill-category li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+            color: #2c4a3c;
+        }
+        
+        .skill-category li:before {
+            content: "✓";
+            color: #5c8374;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-item {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #5c8374;
+        }
+        
+        .achievement-item h3 {
+            color: #1a472a;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .achievement-item ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .achievement-item li {
+            padding: 5px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #2c4a3c;
+            line-height: 1.6;
+        }
+        
+        .achievement-item li:before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hannah's Resume</h1>
+        <div class="contact">
+            Psychology Student | Nature Enthusiast | Performer
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Education</h2>
+        <div class="education-item">
+            <div class="edu-header">
+                <h3 class="degree">Bachelor of Science in Psychology with Business Minor</h3>
+                <span class="date">Expected Graduation: 2029</span>
+            </div>
+            <p class="institution">University of Minnesota Duluth</p>
+            <ul class="responsibilities">
+                <li>Psychology Major with focus on the connection between psychology and nature</li>
+                <li>Business Minor to complement psychology studies</li>
+                <li>Relevant coursework in environmental psychology and human consciousness</li>
+                <li>Current Status: Freshman</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Experience</h2>
+        
+        <div class="job">
+            <div class="job-header">
+                <h3 class="job-title">Barista</h3>
+                <span class="date">February 2025 - Present</span>
+            </div>
+            <p class="company">Livonias Coffee Shop</p>
+            <ul class="responsibilities">
+                <li>Mastered specialty coffee preparation</li>
+                <li>Built strong customer relationships through personalized service and product knowledge</li>
+                <li>Managed inventory and maintained equipment to ensure optimal operation</li>
+                <li>Collaborated with team members to maintain efficient workflow during peak hours</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <h3 class="job-title">Barista</h3>
+                <span class="date">June 2024 - June 2025</span>
+            </div>
+            <p class="company">Scooter's Coffee</p>
+            <ul class="responsibilities">
+                <li>Delivered exceptional customer service in high-volume drive-through environment</li>
+                <li>Maintained strict quality standards for all beverages and food products</li>
+                <li>Handled cash transactions and maintained accurate register operations</li>
+                <li>Ensured compliance with health and safety regulations and company policies</li>
+            </ul>
+        </div>
+        
+        <div class="job">
+            <div class="job-header">
+                <h3 class="job-title">Lifeguard</h3>
+                <span class="date">2024</span>
+            </div>
+            <p class="company">City of Fort Collins</p>
+            <ul class="responsibilities">
+                <li>Monitored large municipal pool facility ensuring safety of 100+ daily patrons</li>
+                <li>Was prepared to execute emergency response protocols and provide first aid when needed</li>
+                <li>Enforced pool rules and regulations while maintaining positive guest relations</li>
+                <li>Provided supervision and assistance to pool visitors of all ages</li>
+            </ul>
+        </div>
+        
+        <div class="job">
+            <div class="job-header">
+                <h3 class="job-title">Lifeguard</h3>
+                <span class="date">Summer 2023</span>
+            </div>
+            <p class="company">Splash Pools</p>
+            <ul class="responsibilities">
+                <li>Maintained pool chemical balance and conducted regular safety inspections</li>
+                <li>Responded quickly to water emergencies using Red Cross training protocols</li>
+                <li>Resolved customer concerns and conflicts with professional communication</li>
+                <li>Maintained clean and organized pool area to ensure optimal guest experience</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <h3>Technical Skills & Certifications</h3>
+                <ul>
+                    <li>Microsoft Office Suite</li>
+                    <li>Data Analysis</li>
+                    <li>Research Methods</li>
+                    <li>Statistical Software</li>
+                    <li>Red Cross Certified Lifeguard</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Performance & Communication</h3>
+                <ul>
+                    <li>Public Speaking</li>
+                    <li>Multilingual (French, Italian, Latin, Spanish)</li>
+                    <li>Choir & Vocal Performance</li>
+                    <li>Theater Performance</li>
+                </ul>
+            </div>
+            <div class="skill-category">
+                <h3>Personal & Environmental</h3>
+                <ul>
+                    <li>Hiking & Backpacking</li>
+                    <li>Sustainability Advocacy</li>
+                    <li>Environmental Awareness</li>
+                    <li>Leadership</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Achievements</h2>
+        <div class="achievements-grid">
+            <div class="achievement-item">
+                <h3>🎭 Performance Achievements</h3>
+                <ul>
+                    <li>Member of 8th Grade Select Choir</li>
+                    <li>Wavelength Jazz Choir Member</li>
+                    <li>Lake Effect Jazz Choir Member</li>
+                    <li>Multilingual singing performances</li>
+                </ul>
+            </div>
+            <div class="achievement-item">
+                <h3>🌿 Environmental & Academic</h3>
+                <ul>
+                    <li>Vegan lifestyle adoption for environmental impact</li>
+                    <li>Sustainability advocacy and education</li>
+                    <li>Psychology and nature research focus</li>
+                    <li>Backpacking and outdoor leadership</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
