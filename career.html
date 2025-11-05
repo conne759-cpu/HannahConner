@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Interests - Psychology & Business</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        /* Navigation Styles */
+        .nav-menu {
+            position: static;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: transparent;
+            padding: 15px 0;
+            box-shadow: none;
+            z-index: 1000;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-list li a {
+            text-decoration: none;
+            color: #2c4a3c;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-list li a:hover {
+            background-color: rgba(92, 131, 116, 0.1);
+            color: #1a472a;
+        }
+
+        .nav-list li a.active {
+            border-bottom: 2px solid #5c8374;
+        }
+
+        /* Adjust body to account for fixed nav */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Georgia', serif;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
+                        url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #2c4a3c;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .career-header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .career-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            color: #1a472a;
+            margin-bottom: 20px;
+            font-weight: normal;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #1a472a;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #5c8374;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.6em;
+            color: #2c4a3c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h4 {
+            font-size: 1.3em;
+            color: #1a472a;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+
+        .company-card {
+            background: linear-gradient(135deg, rgba(92, 131, 116, 0.1), rgba(255, 255, 255, 0.9));
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #5c8374;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-name {
+            font-size: 1.8em;
+            color: #1a472a;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .company-description {
+            font-size: 1.1em;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: #2c4a3c;
+        }
+
+        .contact-info {
+            background-color: rgba(92, 131, 116, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .contact-item {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-label {
+            font-weight: bold;
+            color: #1a472a;
+            min-width: 120px;
+        }
+
+        .contact-value {
+            color: #2c4a3c;
+        }
+
+        .contact-value a {
+            color: #5c8374;
+            text-decoration: none;
+        }
+
+        .contact-value a:hover {
+            text-decoration: underline;
+        }
+
+        .interest-section {
+            background-color: rgba(92, 131, 116, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #5c8374;
+        }
+
+        .qualification-section {
+            background-color: rgba(26, 71, 42, 0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #1a472a;
+        }
+
+        .skills-alignment {
+            background-color: rgba(92, 131, 116, 0.08);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #5c8374;
+        }
+
+        .nature-symbol {
+            font-size: 2em;
+            color: #5c8374;
+            margin: 20px 0;
+        }
+
+        .intro-text {
+            font-size: 1.2em;
+            color: #5c8374;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .career-header, .career-section {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+            .company-card {
+                padding: 20px;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .contact-label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="career.html" class="active">Career</a></li>
+            <li><a href="hobbies.html">Hobbies</a></li>
+            <li><a href="game.html">Game</a></li>
+            <li><a href="resume.html">Resume</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="career-header">
+            <div class="nature-symbol">💼</div>
+            <h1>Career Interests</h1>
+            <div class="intro-text">
+                Exploring opportunities where psychology meets business and finance
+            </div>
+        </div>
+
+        <div class="career-section">
+            <h2>Target Companies</h2>
+            
+            <div class="company-card">
+                <div class="company-name">
+                    🏦 Primerica
+                </div>
+                <div class="company-description">
+                    Primerica is a financial services company centered around families. They offer a workplace that provides employees with a wide range of opportunities to learn, grow and thrive in their careers while also fostering an engaging environment fueled by collaboration and inclusion. They are recognized as an employer of choice for their culture and positive work environment. They offer a 6-month training program which helps you gain license, mentorship, and experience in finance and business. This can be a stand-alone course, or you can have the opportunity to be hired after completion.
+                </div>
+
+                <div class="contact-info">
+                    <h4>Contact Information</h4>
+                    <div class="contact-item">
+                        <span class="contact-label">Website:</span>
+                        <span class="contact-value"><a href="https://www.primerica.com/public/" target="_blank">https://www.primerica.com/public/</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Contact:</span>
+                        <span class="contact-value">Wanda Archer (Financial Advisor)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Address:</span>
+                        <span class="contact-value">333 S Wadsworth Blvd STE D-120, Lakewood, CO 80227</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">(509) 301-4524</span>
+                    </div>
+                </div>
+
+                <div class="interest-section">
+                    <h4>Why I'm Interested</h4>
+                    <p>I am very interested in finance as well as business functions. It intrigues me that they offer the training course, which would be very useful for me whether I join their company or not.</p>
+                </div>
+
+                <div class="qualification-section">
+                    <h4>My Qualifications</h4>
+                    <p>I would be prepared for this company after completion of their training program. I also have already been gaining many skills within my business classes, as well as through being a member of DECA in high school.</p>
+                </div>
+
+                <div class="skills-alignment">
+                    <h4>Skills & Interests Alignment</h4>
+                    <p>I believe that every company needs a psychologist for many aspects of business, so as a psychology major and business minor, I believe that my unique skills are an asset that might be rare to find in other employees who have a business focus.</p>
+                </div>
+            </div>
+
+            <div class="company-card">
+                <div class="company-name">
+                    🛡️ Travelers Insurance
+                </div>
+                <div class="company-description">
+                    Travelers is an American insurance company providing personal, business, bond, and specialty insurance. A top 10 writer of personal insurance in the U.S., it offers coverage for various vehicles and customizable policies. They offer many positions, including corporate careers in legal, human resources, marketing, and more.
+                </div>
+
+                <div class="contact-info">
+                    <h4>Contact Information</h4>
+                    <div class="contact-item">
+                        <span class="contact-label">Website:</span>
+                        <span class="contact-value"><a href="https://www.travelers.com/" target="_blank">https://www.travelers.com/</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Contact:</span>
+                        <span class="contact-value">Dylan Olson (Associate Account Executive, Bond & Specialty Insurance, Private and Non-Private)</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span class="contact-value"><a href="mailto:dnolson@travelers.com">dnolson@travelers.com</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Address:</span>
+                        <span class="contact-value">385 Washington St, 9276-SB04R, St. Paul, MN 55102</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">Phone:</span>
+                        <span class="contact-value">(651) 310-2452</span>
+                    </div>
+                </div>
+
+                <div class="interest-section">
+                    <h4>Why I'm Interested</h4>
+                    <p>I want to work in a corporate level position. They offer many different opportunities within this context and I like the idea of working for a big company because that offers many opportunities for promotions.</p>
+                </div>
+
+                <div class="qualification-section">
+                    <h4>My Qualifications</h4>
+                    <p>I am slowly but surely growing my background of business knowledge. I also am a fast learner/very adaptable. Another thing which sets me apart is I have a very strong work ethic and don't need to be micromanaged in order to be a successful employee/member of the company.</p>
+                </div>
+
+                <div class="skills-alignment">
+                    <h4>Skills & Interests Alignment</h4>
+                    <p>As a psychology major, this background gives me the know-how to aid this company by using my skills to improve employee wellbeing, boost productivity, and create a positive culture by applying my knowledge to workplace challenges. I also can aid in employee selection, training, motivation, and the overall efficiency, engagement, and satisfaction of the workplace environment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="career-section">
+            <h2>Career Philosophy</h2>
+            <div class="company-card">
+                <div class="company-description">
+                    <p>My unique combination of psychology and business education positions me to bring valuable insights to any organization. I believe that understanding human behavior and motivation is crucial for business success, and I'm excited to apply my knowledge in practical, real-world settings.</p>
+                    
+                    <p>Whether in financial services or corporate insurance, I see opportunities to enhance workplace culture, improve employee satisfaction, and contribute to organizational effectiveness through the application of psychological principles.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Hannah. All rights reserved.</p>
+    </footer>
+
+    <style>
+        .site-footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            margin-top: 40px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            color: #2c4a3c;
+            font-size: 0.9em;
+        }
+    </style>
+    <script defer src="js/script.js"></script>
+</body>
+</html>
+

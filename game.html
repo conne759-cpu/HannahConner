@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe - Maroon & Gold Bulldogs</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        /* Navigation Styles */
+        .nav-menu {
+            position: static;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: transparent;
+            padding: 15px 0;
+            box-shadow: none;
+            z-index: 1000;
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-list li a {
+            text-decoration: none;
+            color: #2c4a3c;
+            font-size: 1.1em;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-list li a:hover {
+            background-color: rgba(92, 131, 116, 0.1);
+            color: #1a472a;
+        }
+
+        .nav-list li a.active {
+            border-bottom: 2px solid #5c8374;
+        }
+
+        /* Adjust body to account for fixed nav */
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #800020 0%, #B8860B 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #B8860B;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .game-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            border: 3px solid #B8860B;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #800020;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .game-info {
+            font-size: 1.2em;
+            color: #800020;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            margin: 30px auto;
+            background-color: #800020;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: fit-content;
+        }
+
+        .cell {
+            background-color: #B8860B;
+            border: none;
+            border-radius: 10px;
+            font-size: 2.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #800020;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .cell:hover {
+            background-color: #DAA520;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .cell:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        .cell.x {
+            color: #800020;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 3em;
+        }
+
+        .cell.o {
+            color: #B8860B;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 3em;
+        }
+
+        .reset-button {
+            background: linear-gradient(45deg, #800020, #B8860B);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .reset-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .reset-button:active {
+            transform: translateY(0);
+        }
+
+        .winner-message {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(184, 134, 11, 0.2);
+            border: 2px solid #B8860B;
+        }
+
+        .winner-message.winner-x {
+            color: #800020;
+            background-color: rgba(128, 0, 32, 0.2);
+            border-color: #800020;
+        }
+
+        .winner-message.winner-o {
+            color: #B8860B;
+            background-color: rgba(184, 134, 11, 0.2);
+            border-color: #B8860B;
+        }
+
+        .winner-message.tie {
+            color: #666;
+            background-color: rgba(102, 102, 102, 0.2);
+            border-color: #666;
+        }
+
+        .audio-controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .audio-btn {
+            background: linear-gradient(45deg, #800020, #B8860B);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .audio-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .audio-btn:active {
+            transform: translateY(0);
+        }
+
+        .audio-btn.muted {
+            background: #666;
+        }
+
+        @media (max-width: 600px) {
+            .game-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .game-board {
+                grid-template-columns: repeat(3, 80px);
+                grid-template-rows: repeat(3, 80px);
+            }
+
+            .cell {
+                font-size: 2em;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="discover.html">Discover</a></li>
+            <li><a href="career.html">Career</a></li>
+            <li><a href="hobbies.html">Hobbies</a></li>
+            <li><a href="game.html" class="active">Game</a></li>
+            <li><a href="resume.html">Resume</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <div class="game-container">
+            <h1>🎮 Tic Tac Toe</h1>
+        <div class="game-info">You are 🐕 Bulldogs, Computer is 🏫 UMN</div>
+        <div class="game-board" id="gameBoard">
+            <button class="cell" data-index="0"></button>
+            <button class="cell" data-index="1"></button>
+            <button class="cell" data-index="2"></button>
+            <button class="cell" data-index="3"></button>
+            <button class="cell" data-index="4"></button>
+            <button class="cell" data-index="5"></button>
+            <button class="cell" data-index="6"></button>
+            <button class="cell" data-index="7"></button>
+            <button class="cell" data-index="8"></button>
+        </div>
+        <div id="winnerMessage"></div>
+        <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
+        
+        <!-- Audio Controls -->
+        <div class="audio-controls">
+            <button id="muteToggle" class="audio-btn" onclick="toggleAudio()">🔊 Sound On</button>
+            <button id="musicToggle" class="audio-btn" onclick="toggleMusic()">🎵 Music Off</button>
+        </div>
+    </div>
+
+    <script defer src="js/audio-system.js"></script>
+    <script defer src="js/game.js"></script>
+    <script defer src="js/script.js"></script>
+    
+    <script>
+        // Initialize audio system globally
+        window.gameAudio = null;
+        let musicEnabled = false;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            window.gameAudio = new GameAudio();
+            
+            // Start game with sound effects
+            window.gameAudio.playGameStart();
+            
+            // Enable background music after first user interaction
+            document.addEventListener('click', enableBackgroundMusic, { once: true });
+        });
+        
+        function enableBackgroundMusic() {
+            if (musicEnabled && window.gameAudio) {
+                window.gameAudio.startBackgroundMusic();
+            }
+        }
+        
+        function toggleAudio() {
+            if (!window.gameAudio) return;
+            
+            const isEnabled = window.gameAudio.toggleMute();
+            const button = document.getElementById('muteToggle');
+            button.textContent = isEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+            button.classList.toggle('muted', !isEnabled);
+        }
+        
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            const button = document.getElementById('musicToggle');
+            button.textContent = musicEnabled ? '🎵 Music On' : '🎵 Music Off';
+            
+            if (musicEnabled && window.gameAudio) {
+                window.gameAudio.startBackgroundMusic();
+            } else if (window.gameAudio) {
+                window.gameAudio.stopBackgroundMusic();
+            }
+        }
+    </script>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Hannah. All rights reserved.</p>
+        <p>Game credits: Hannah Conner, Sadie Johnson, Samantha Nelson</p>
+    </footer>
+
+    <style>
+        .site-footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            color: #2c4a3c;
+            font-size: 0.9em;
+        }
+    </style>
+</body>
+</html>

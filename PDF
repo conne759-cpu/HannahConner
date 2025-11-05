@@ -1,0 +1,18 @@
+INSTRUCTIONS TO CREATE THE CORRECT PDF:
+
+1. Open resume_template.html in your web browser
+2. Press Ctrl+P (or Cmd+P on Mac) to print
+3. In the print dialog:
+   - Change the destination to "Save as PDF"
+   - Make sure margins are set to "Default" or "Normal"
+   - Click "Save"
+4. Save the file as "resume.pdf" in your "files" folder
+5. This will replace the current incorrect files/resume.pdf
+
+Alternatively, if you prefer to use an online converter:
+1. Go to an HTML to PDF converter website (like html-pdf.com or convertio.co)
+2. Upload the resume_template.html file
+3. Convert and download the PDF
+4. Save it as "resume.pdf" in your "files" folder
+
+This will ensure the PDF contains the same content as your resume.png image and the HTML resume page.

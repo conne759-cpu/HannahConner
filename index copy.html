@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psychology & Nature - Welcome</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+
+  <style>
+    /* ====== NAVIGATION ====== */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 15px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .nav-list li a {
+      text-decoration: none;
+      color: #1a472a;
+      font-size: 1.2em;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    }
+
+    .nav-list li a:hover {
+      background-color: rgba(92, 131, 116, 0.15);
+      color: #1a472a;
+      transform: translateY(-1px);
+    }
+
+    .nav-list li a.active {
+      border-bottom: 2.5px solid #5c8374;
+      background-color: rgba(92, 131, 116, 0.1);
+      color: #1a472a;
+      font-weight: 600;
+    }
+
+    /* ====== GENERAL PAGE STYLING ====== */
+    body {
+      margin: 0;
+      padding-top: 70px; /* space for fixed nav */
+      min-height: 100vh;
+      font-family: 'Georgia', serif;
+      background: linear-gradient(
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.9)
+        ),
+        url('https://images.unsplash.com/photo-1501854140801-50d01698950b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #2c4a3c;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto 0;
+      padding: 40px 20px;
+    }
+
+    .welcome-card {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #1a472a;
+      margin-bottom: 20px;
+      font-weight: normal;
+    }
+
+    .tagline {
+      font-size: 1.2em;
+      color: #5c8374;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .quote {
+      font-style: italic;
+      color: #2c4a3c;
+      padding: 20px;
+      border-left: 4px solid #5c8374;
+      margin: 30px 0;
+      text-align: left;
+      background-color: rgba(92, 131, 116, 0.1);
+    }
+
+    .quote-author {
+      font-size: 0.9em;
+      color: #5c8374;
+      text-align: right;
+      margin-top: 10px;
+    }
+
+    .nature-symbol {
+      font-size: 2em;
+      color: #5c8374;
+      margin: 20px 0;
+    }
+
+    /* ====== WELCOME SECTION ====== */
+    .welcome-section {
+      text-align: left;
+      margin: 40px 0;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      border-left: 4px solid #5c8374;
+    }
+
+    .welcome-section h2 {
+      color: #1a472a;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    .intro-text,
+    .interests {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: #2c4a3c;
+      font-size: 1.1em;
+    }
+
+    .interests {
+      margin-bottom: 0;
+    }
+
+    /* ====== HEADSHOT ====== */
+    .headshot-section {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .headshot-image {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 30%;
+      border: 5px solid #5c8374;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .headshot-image:hover {
+      transform: scale(1.05);
+    }
+
+    .headshot-caption {
+      margin-top: 20px;
+      font-size: 1.1em;
+      color: #2c4a3c;
+      font-style: italic;
+    }
+
+    /* ====== VIDEO SECTION ====== */
+    .video-section {
+      margin: 40px auto;
+      text-align: center;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-title {
+      color: #1a472a;
+      font-size: 1.5em;
+      margin-bottom: 20px;
+    }
+
+    /* ====== CONTENT SECTIONS ====== */
+    .content-sections {
+      margin-top: 50px;
+    }
+
+    .content-card {
+      display: flex;
+      align-items: center;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      margin: 30px 0;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .content-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .content-card.right {
+      flex-direction: row;
+      background: linear-gradient(
+        to right,
+        rgba(236, 247, 242, 0.95),
+        rgba(255, 255, 255, 0.95)
+      );
+    }
+
+    .content-card.left {
+      flex-direction: row-reverse;
+      background: linear-gradient(
+        to left,
+        rgba(242, 236, 247, 0.95),
+        rgba(255, 255, 255, 0.95)
+      );
+    }
+
+    .text-content {
+      padding: 40px;
+      flex: 1;
+    }
+
+    .content-card.left .text-content h2 {
+      color: #6b2d5c;
+      border-left: 4px solid #8e3c7b;
+      padding-left: 15px;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .content-card.right .text-content h2 {
+      color: #2d5c2d;
+      border-left: 4px solid #3c7b3c;
+      padding-left: 15px;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .content-card.left .text-content p {
+      color: #4a2c4a;
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+
+    .content-card.right .text-content p {
+      color: #2c4a2c;
+      line-height: 1.8;
+      font-size: 1.1em;
+    }
+
+    .image-content {
+      flex: 1;
+      height: 400px;
+    }
+
+    .section-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ====== FOOTER ====== */
+    .site-footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      color: #2c4a3c;
+      font-size: 0.9em;
+    }
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width: 768px) {
+      .content-card,
+      .content-card.right,
+      .content-card.left {
+        flex-direction: column;
+      }
+
+      .image-content {
+        height: 300px;
+        width: 100%;
+      }
+
+      .text-content {
+        padding: 30px;
+      }
+
+      .nav-list {
+        gap: 15px;
+      }
+
+      .nav-list li a {
+        font-size: 1em;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ====== NAVIGATION ====== -->
+  <nav class="nav-menu">
+    <ul class="nav-list">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="discover.html">Discover</a></li>
+      <li><a href="career.html">Career</a></li>
+      <li><a href="hobbies.html">Hobbies</a></li>
+      <li><a href="game.html">Game</a></li>
+      <li><a href="resume.html">Resume</a></li>
+    </ul>
+  </nav>
+
+  <!-- ====== MAIN CONTENT ====== -->
+  <div class="container">
+    <div class="welcome-card">
+      <div class="nature-symbol">🌿</div>
+      <h1>Welcome to My Space</h1>
+
+      <section class="welcome-section">
+        <h2>Hello, I'm Hannah!</h2>
+        <p class="intro-text">
+          I'm a passionate undergraduate student at UMD, pursuing my degree in Psychology with a focus on Environmental Psychology. My journey combines my love for understanding human behavior with my deep connection to nature and environmental conservation.
+        </p>
+        <p class="interests">
+          I'm particularly interested in studying how our environment impacts mental health and well-being, and I aspire to contribute to creating more nature-integrated therapeutic approaches.
+        </p>
+      </section>
+
+      <div class="quote">
+        "Look deep into nature, and then you will understand everything better."
+        <div class="quote-author">- Albert Einstein</div>
+      </div>
+      <div class="nature-symbol">🦋</div>
+    </div>
+
+    <div class="headshot-section">
+      <img src="images/image 1.png" alt="Professional headshot of Hannah Conner" class="headshot-image" />
+      <div class="headshot-caption">Professional Headshot</div>
+    </div>
+
+    <div class="video-section">
+      <h2 class="video-title">Welcome to My Journey</h2>
+      <video width="320" height="240" controls>
+        <source src="videos/Introvideo.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <div class="content-sections">
+      <div class="content-card left">
+        <div class="text-content">
+          <h2>My Performance Journey 🎭</h2>
+          <p>
+            I have been performing since I was three years old within theater, choir, and many select singing groups, including 8th grade select choir, Wavelength Jazz Choir, and Lake Effect Jazz Choir. I love performing in big groups as well as solo. I have sung in many languages including French, Italian, Latin, and Spanish.
+          </p>
+        </div>
+        <div class="image-content">
+          <img src="images/image 2.png" alt="Hannah performing in choir and theater" class="section-image" />
+        </div>
+      </div>
+
+      <div class="content-card right">
+        <div class="image-content">
+          <img src="images/image 3.png" alt="Hannah hiking and enjoying nature" class="section-image" />
+        </div>
+        <div class="text-content">
+          <h2>Nature & Sustainability 🌿</h2>
+          <p>
+            I love to hike and spend time in nature. My dad and I often go on backpacking trips together. I’m passionate about sustainability and have adopted a vegan lifestyle to help reduce methane emissions and environmental impact.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <footer class="site-footer">
+    <p>&copy; 2025 Hannah. All rights reserved.</p>
+  </footer>
+</body>
+</html>
