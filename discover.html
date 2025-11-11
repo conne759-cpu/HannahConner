@@ -143,6 +143,46 @@
             }
         }
     </style>
+    <script>
+        // Capture the first frame of the campus life video and use it as a poster image
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('campusVideo');
+            if (!video) return;
+
+            function tryCapture() {
+                try {
+                    // Small seek to ensure a frame is available
+                    video.currentTime = 0.1;
+                } catch (e) {
+                    // ignore
+                }
+            }
+
+            video.addEventListener('loadedmetadata', function() {
+                tryCapture();
+                video.addEventListener('seeked', function onSeeked() {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = video.videoWidth || 640;
+                        canvas.height = video.videoHeight || 360;
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+                        video.setAttribute('poster', dataURL);
+                        // remove listener after success
+                        video.removeEventListener('seeked', onSeeked);
+                    } catch (err) {
+                        console.warn('Could not capture campus video frame:', err);
+                    }
+                });
+            });
+
+            // Fallback in case metadata doesn't load quickly
+            setTimeout(function() {
+                if (!video.getAttribute('poster')) tryCapture();
+            }, 1500);
+        });
+    </script>
 </head>
 <body>
     <nav class="nav-menu">
@@ -180,7 +220,7 @@
             <div class="video-section">
                 <h2 class="topic-title">📽️ Campus Life</h2>
                 <div class="video-container">
-                    <video controls>
+                    <video id="campusVideo" controls preload="metadata" playsinline>
                         <source src="video-output-A20F17C6-F008-4936-8F6C-96207E952A5F-1.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
