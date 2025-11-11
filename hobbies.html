@@ -205,14 +205,92 @@
             border-radius: 10px;
         }
         
+        /* Lightbox styles */
+        .gallery-item img { cursor: zoom-in; }
+
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.85);
+            z-index: 20000;
+            padding: 20px;
+        }
+
+        #lightbox.open { display: flex; }
+
+        #lightbox-img {
+            max-width: 92%;
+            max-height: 92%;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            background: #fff;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 16px;
+            cursor: button;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
         /* Specific positioning for image 7 */
         .gallery-item:nth-child(4) img {
             object-position: 60% center;
         }
 
         @media (max-width: 768px) {
-            .hobby-grid {
-                grid-template-columns: 1fr;
+            /* Simplify gallery to 2 columns and make images larger and fully visible */
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 45vw; /* taller rows so images are larger on phones */
+                gap: 12px;
+                margin-top: 20px;
+            }
+
+            .gallery-item {
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .gallery-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain; /* show the whole photo on mobile */
+                background: rgba(250,250,250,0.9);
+                transition: none;
+            }
+
+            /* Make hobby descriptions full width and remove large left margin on mobile */
+            .hobby-description {
+                margin-left: 0;
+                padding: 0 10px 20px 10px;
+                font-size: 1.05em;
+            }
+
+            /* Wider story section for readability */
+            .story-section {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0 10px;
+            }
+
+            .story-box {
+                padding: 18px;
+                font-size: 1.05em;
+            }
+
+            /* Reduce overall content padding on small screens */
+            .content-section {
+                padding: 24px;
             }
         }
     </style>
@@ -286,6 +364,12 @@
                 </div>
             </div>
 
+            <!-- Lightbox overlay for gallery images -->
+            <div id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+                <button id="lightbox-close" aria-label="Close preview">✕</button>
+                <img id="lightbox-img" src="" alt="Expanded photo preview">
+            </div>
+
             <div class="content-section" style="margin-top: 40px;">
                 <h2 style="text-align: center; color: #1a472a; font-size: 2em; margin-bottom: 30px;">Personal Stories</h2>
                 
@@ -328,5 +412,50 @@
         }
     </style>
     <script defer src="js/script.js"></script>
+    <script>
+        // Simple lightbox for gallery images
+        document.addEventListener('DOMContentLoaded', function () {
+            const lightbox = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            const lbClose = document.getElementById('lightbox-close');
+            const imgs = document.querySelectorAll('.photo-gallery .gallery-item img');
+
+            if (!lightbox) return;
+
+            function openLightbox(src, alt) {
+                lbImg.src = src;
+                lbImg.alt = alt || 'Photo preview';
+                lightbox.classList.add('open');
+                lightbox.setAttribute('aria-hidden','false');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('open');
+                lightbox.setAttribute('aria-hidden','true');
+                lbImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            imgs.forEach(img => {
+                img.addEventListener('click', function () {
+                    openLightbox(this.src, this.alt);
+                });
+                img.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') openLightbox(this.src, this.alt);
+                });
+            });
+
+            lbClose.addEventListener('click', closeLightbox);
+
+            lightbox.addEventListener('click', function (e) {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        });
+    </script>
 </body>
 </html>

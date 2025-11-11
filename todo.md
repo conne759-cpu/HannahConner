@@ -1,4 +1,10 @@
-- [x] Analyze requirements - Need to add credit under campus life video for Hannah Conner, Sadie Johnson, and Samantha Nelson
-- [x] Add credit section to discover.html under the campus life video
-- [x] Style the credit section to match the existing design
-- [x] Test the changes
+# Fix Game Emoji Display Issue
+
+## Todo List:
+- [ ] Examine game.html file to understand emoji usage
+- [ ] Check js/game.js file for emoji implementation
+- [ ] Analyze CSS styling for emoji display
+- [ ] Identify why emojis/icons are not visible
+- [ ] Fix the emoji display issues
+- [ ] Test the game to verify emojis appear correctly
+- [ ] Verify the solution works across different browsers

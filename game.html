@@ -143,6 +143,8 @@
             font-size: 3em;
         }
 
+    /* Emoji-only mode: cells render emoji characters directly. */
+
         .reset-button {
             background: linear-gradient(45deg, #800020, #B8860B);
             color: white;
@@ -194,39 +196,6 @@
             border-color: #666;
         }
 
-        .audio-controls {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .audio-btn {
-            background: linear-gradient(45deg, #800020, #B8860B);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .audio-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .audio-btn:active {
-            transform: translateY(0);
-        }
-
-        .audio-btn.muted {
-            background: #666;
-        }
-
         @media (max-width: 600px) {
             .game-container {
                 padding: 20px;
@@ -263,7 +232,9 @@
     <main>
         <div class="game-container">
             <h1>🎮 Tic Tac Toe</h1>
-        <div class="game-info">You are 🐕 Bulldogs, Computer is 🏫 UMN</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-direction:column;">
+            <div class="game-info">You are 🐕 Bulldogs, Computer is 🏫 UMN</div>
+        </div>
         <div class="game-board" id="gameBoard">
             <button class="cell" data-index="0"></button>
             <button class="cell" data-index="1"></button>
@@ -276,61 +247,13 @@
             <button class="cell" data-index="8"></button>
         </div>
         <div id="winnerMessage"></div>
-        <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
-        
-        <!-- Audio Controls -->
-        <div class="audio-controls">
-            <button id="muteToggle" class="audio-btn" onclick="toggleAudio()">🔊 Sound On</button>
-            <button id="musicToggle" class="audio-btn" onclick="toggleMusic()">🎵 Music Off</button>
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;">
+            <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
         </div>
     </div>
 
-    <script defer src="js/audio-system.js"></script>
     <script defer src="js/game.js"></script>
     <script defer src="js/script.js"></script>
-    
-    <script>
-        // Initialize audio system globally
-        window.gameAudio = null;
-        let musicEnabled = false;
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            window.gameAudio = new GameAudio();
-            
-            // Start game with sound effects
-            window.gameAudio.playGameStart();
-            
-            // Enable background music after first user interaction
-            document.addEventListener('click', enableBackgroundMusic, { once: true });
-        });
-        
-        function enableBackgroundMusic() {
-            if (musicEnabled && window.gameAudio) {
-                window.gameAudio.startBackgroundMusic();
-            }
-        }
-        
-        function toggleAudio() {
-            if (!window.gameAudio) return;
-            
-            const isEnabled = window.gameAudio.toggleMute();
-            const button = document.getElementById('muteToggle');
-            button.textContent = isEnabled ? '🔊 Sound On' : '🔇 Sound Off';
-            button.classList.toggle('muted', !isEnabled);
-        }
-        
-        function toggleMusic() {
-            musicEnabled = !musicEnabled;
-            const button = document.getElementById('musicToggle');
-            button.textContent = musicEnabled ? '🎵 Music On' : '🎵 Music Off';
-            
-            if (musicEnabled && window.gameAudio) {
-                window.gameAudio.startBackgroundMusic();
-            } else if (window.gameAudio) {
-                window.gameAudio.stopBackgroundMusic();
-            }
-        }
-    </script>
     </main>
 
     <footer class="site-footer">

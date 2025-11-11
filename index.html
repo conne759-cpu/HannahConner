@@ -393,6 +393,12 @@
                 flex-direction: column;
             }
 
+            /* On small screens, ensure the image appears above the text for "left" cards
+               (so Performance Journey's photo will stack above its text). */
+            .content-card.left .image-content {
+                order: -1;
+            }
+
             .image-content {
                 height: 300px;
                 width: 100%;
