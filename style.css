@@ -72,6 +72,12 @@ img, video {
 
 /* Mobile / small-screen nav improvements: make nav horizontally scrollable and increase tap targets */
 @media (max-width: 768px) {
+  
+  /* TEST: If you see a red border around the page, CSS is loading */
+  body {
+    border: 10px solid red !important;
+  }
+  
   .nav-menu {
     position: fixed !important;
     top: 0;
