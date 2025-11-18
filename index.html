@@ -142,6 +142,54 @@
             margin-bottom: 20px;
         }
 
+        .what-to-expect-section {
+            margin: 40px auto;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .what-to-expect-section h2 {
+            color: #1a472a;
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .expect-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .expect-item {
+            background: rgba(92, 131, 116, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #5c8374;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .expect-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: rgba(92, 131, 116, 0.08);
+        }
+
+        .expect-item h3 {
+            color: #1a472a;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+        }
+
+        .expect-item p {
+            color: #2c4a3c;
+            line-height: 1.6;
+            margin: 0;
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 20px;
@@ -238,6 +286,36 @@
                     <source src="videos/Introvideo.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
+            </div>
+        </div>
+
+        <div class="what-to-expect-section">
+            <h2>What Can You Expect to See on This Website?</h2>
+            <div class="expect-grid">
+                <div class="expect-item">
+                    <h3>🏠 Home</h3>
+                    <p>Get to know me through my personal journey, passions, and the experiences that have shaped who I am today.</p>
+                </div>
+                <div class="expect-item">
+                    <h3>🏔️ Discover Duluth</h3>
+                    <p>Explore the natural beauty and attractions of Duluth, MN - my hometown and a place close to my heart.</p>
+                </div>
+                <div class="expect-item">
+                    <h3>💼 Career Interests</h3>
+                    <p>Learn about my passion for psychology, business, and how I'm combining these fields in my academic journey.</p>
+                </div>
+                <div class="expect-item">
+                    <h3>🎨 Hobbies & Interests</h3>
+                    <p>Dive into my love for performing arts, hiking, sustainability, and the activities that shape who I am.</p>
+                </div>
+                <div class="expect-item">
+                    <h3>🎮 Interactive Game</h3>
+                    <p>Challenge yourself with a fun Tic Tac Toe game featuring UMD Bulldogs!</p>
+                </div>
+                <div class="expect-item">
+                    <h3>📄 Professional Resume</h3>
+                    <p>View my academic achievements, work experience, and skills in a comprehensive resume format.</p>
+                </div>
             </div>
         </div>
 

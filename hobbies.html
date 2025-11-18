@@ -256,6 +256,74 @@
                 padding: 24px;
             }
         }
+
+        .why-important-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+
+        .why-important-section h2 {
+            font-size: 2.2em;
+            color: #1a472a;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .importance-card {
+            background: linear-gradient(to bottom, rgba(236, 247, 242, 0.6), rgba(255, 255, 255, 0.8));
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid rgba(92, 131, 116, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .importance-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-color: #5c8374;
+        }
+
+        .importance-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .importance-card h3 {
+            color: #1a472a;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .importance-card p {
+            color: #2c4a3c;
+            line-height: 1.8;
+            font-size: 1.05em;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .why-important-section {
+                padding: 30px 20px;
+            }
+
+            .why-important-section h2 {
+                font-size: 1.8em;
+            }
+
+            .importance-card {
+                padding: 25px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -352,6 +420,32 @@
                         <h3>My Swimming Journey 🏊‍♀️</h3>
                         <p>Swimming was another family for me, but it was a bit different because the sport pushes your mind and body in a different way. I had never considered myself to be an athletic person before I joined swimming in my freshman year of high school, but over the next three years, I was able to push myself in ways I never thought possible.</p>
                         <p>There were some mornings I had to drag myself out of bed and struggled to jump into that cold water at 5:15am, but I did it over and over and over again until I was able to achieve a level of greatness within myself which I will always be proud of.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="why-important-section">
+                <h2>Why These Activities Are Important to Me</h2>
+                <div class="importance-grid">
+                    <div class="importance-card">
+                        <div class="importance-icon">🎭</div>
+                        <h3>Performing Arts</h3>
+                        <p>Performing gives me a way to express myself and connect with others on a deeper level. Whether I'm singing in a choir or acting on stage, these experiences have taught me confidence, teamwork, and the power of shared creativity. The bonds I've formed through music and theater are unlike any other - we become a family united by our passion.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">🌲</div>
+                        <h3>Nature & Hiking</h3>
+                        <p>Spending time in nature grounds me and reminds me of what's truly important. Hiking with my dad has given us countless opportunities to disconnect from the busy world and reconnect with each other. These trails have been the backdrop for some of our best conversations and have instilled in me a deep respect for the environment and a commitment to protecting it.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">🌱</div>
+                        <h3>Sustainability & Veganism</h3>
+                        <p>Living sustainably isn't just a hobby - it's a responsibility I take seriously. Adopting a vegan lifestyle allows me to align my daily actions with my values. It's my way of contributing to a healthier planet and showing that individual choices can make a collective difference. This commitment keeps me mindful and purposeful in everything I do.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">💪</div>
+                        <h3>Swimming & Athletics</h3>
+                        <p>Swimming taught me that I'm capable of far more than I initially believed. Those early morning practices pushed me mentally and physically, building discipline and resilience that I carry into every aspect of my life. It showed me that greatness isn't about natural talent - it's about showing up consistently and pushing through the challenges.</p>
                     </div>
                 </div>
             </div>

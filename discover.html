@@ -105,6 +105,111 @@
                 padding: 20px;
             }
         }
+
+        .campus-highlights-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 3px solid rgba(92, 131, 116, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            color: #1a472a;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .intro-text {
+            text-align: center;
+            font-size: 1.15em;
+            color: #2c4a3c;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .activity-card {
+            background: linear-gradient(135deg, rgba(236, 247, 242, 0.7), rgba(255, 255, 255, 0.9));
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid #5c8374;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-left-width: 6px;
+        }
+
+        .activity-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .activity-card h3 {
+            color: #1a472a;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+
+        .activity-card p {
+            color: #2c4a3c;
+            line-height: 1.7;
+            font-size: 1.05em;
+            margin: 0;
+        }
+
+        .reflection-box {
+            background: linear-gradient(to right, rgba(92, 131, 116, 0.15), rgba(236, 247, 242, 0.5));
+            padding: 35px;
+            border-radius: 15px;
+            border: 2px solid rgba(92, 131, 116, 0.3);
+            margin-top: 40px;
+        }
+
+        .reflection-box h3 {
+            color: #1a472a;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reflection-box p {
+            color: #2c4a3c;
+            line-height: 1.9;
+            font-size: 1.15em;
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .activity-card {
+                padding: 20px;
+            }
+
+            .reflection-box {
+                padding: 25px 20px;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+        }
     </style>
     <script>
         // Capture the first frame of the campus life video and use it as a poster image
@@ -226,6 +331,80 @@
                     <p class="credits-text">Video Credits: Hannah Conner, Sadie Johnson, Samantha Nelson</p>
                 </div>
             </div>
+
+            <div class="campus-highlights-section">
+                <h2 class="section-title">🎯 Campus Highlights & Personal Stories</h2>
+                <div class="intro-text">
+                    <p>One of the most amazing things about UMD is that <span class="highlight">there's always something to do</span>. From outdoor adventures to academic opportunities to wellness activities, campus life is vibrant and engaging. Even in just my first semester, I've been able to explore so many different aspects of university life!</p>
+                </div>
+
+                <div class="activities-grid">
+                    <div class="activity-card">
+                        <div class="activity-icon">🏕️</div>
+                        <h3>Four-Day Freshman Outdoors Trip</h3>
+                        <p>Started my UMD journey with an incredible outdoor adventure that helped me connect with fellow freshmen and explore the beautiful nature surrounding Duluth.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🔬</div>
+                        <h3>Research Participation</h3>
+                        <p>Got involved in academic research, contributing to important studies and gaining hands-on experience in my field of interest.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🥋</div>
+                        <h3>Self-Defense Class</h3>
+                        <p>Learned valuable safety skills and built confidence through empowering self-defense training offered on campus.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">💭</div>
+                        <h3>Counseling Services</h3>
+                        <p>Took advantage of UMD's excellent mental health resources, prioritizing my wellbeing and personal growth.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🎤</div>
+                        <h3>Panel Talks & Discussions</h3>
+                        <p>Attended numerous panel discussions on diverse topics, expanding my knowledge and perspectives on current issues.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">✝️</div>
+                        <h3>Chi Alpha Christian Group</h3>
+                        <p>Found community and spiritual growth through regular participation in Chi Alpha, connecting with like-minded students.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🏉</div>
+                        <h3>Women's Rugby Practice</h3>
+                        <p>Explored new athletic opportunities by joining women's rugby practice and discovering a supportive team environment.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">💪</div>
+                        <h3>Wellness Center Workouts</h3>
+                        <p>Made fitness a regular part of my routine at the state-of-the-art wellness center, staying active and healthy.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🧗</div>
+                        <h3>Outdoor Climbing Trip</h3>
+                        <p>Challenged myself with an exhilarating outdoor climbing adventure, combining my love for nature with physical challenges.</p>
+                    </div>
+
+                    <div class="activity-card">
+                        <div class="activity-icon">🏊‍♀️</div>
+                        <h3>Swimming at the Pool</h3>
+                        <p>Continued my passion for swimming by taking advantage of UMD's excellent aquatic facilities.</p>
+                    </div>
+                </div>
+
+                <div class="reflection-box">
+                    <h3>🌟 My First Semester Reflection</h3>
+                    <p>Looking back at everything I've experienced in just my first semester, I'm amazed at how much UMD has to offer. The variety of activities, programs, and opportunities has allowed me to grow in ways I never expected. Whether it's through outdoor adventures, academic pursuits, athletics, or spiritual community, there's truly something for everyone here. The campus culture encourages exploration and trying new things, which has helped me discover new passions and build lasting friendships. I'm excited to see what the rest of my college journey brings!</p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -238,15 +417,30 @@
         }
 
         .video-container {
-            margin-top: 20px;
-            border-radius: 10px;
+            margin: 20px auto;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             position: relative;
-            min-height: 180px; /* ensure visible area for poster on small screens */
+            max-width: 600px;
+            background: #000;
+        }
+
+        .video-container video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+        }
+
+        #campusPosterOverlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+            display: none;
         }
 
         .video-credits {
@@ -256,21 +450,25 @@
 
         .credits-text {
             color: #2c4a3c;
-            font-size: 0.9em;
+            font-size: 0.95em;
             font-style: italic;
-            opacity: 0.8;
+            opacity: 0.85;
             margin: 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 5px;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
             display: inline-block;
         }
 
-        video {
-            display: block;
-            width: 640px;
-            height: 360px;
-            max-width: 100%;
+        @media (max-width: 768px) {
+            .video-container {
+                max-width: 100%;
+                margin: 15px 0;
+            }
+
+            .video-section {
+                padding: 20px;
+            }
         }
 
         .site-footer {
