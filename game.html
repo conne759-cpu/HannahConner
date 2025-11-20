@@ -129,6 +129,33 @@
             transform: translateY(0);
         }
 
+        .music-button {
+            background: linear-gradient(135deg, #B8860B, #DAA520);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1.1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .music-button:hover {
+            background: linear-gradient(135deg, #DAA520, #B8860B);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .music-button:active {
+            transform: translateY(0);
+        }
+
+        .music-button.muted {
+            background: linear-gradient(135deg, #666, #888);
+        }
+
         .winner-message {
             font-size: 1.5em;
             font-weight: bold;
@@ -208,8 +235,9 @@
             <button class="cell" data-index="8"></button>
         </div>
         <div id="winnerMessage"></div>
-        <div style="display:flex;gap:10px;align-items:center;justify-content:center;">
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;">
             <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
+            <button id="musicButton" class="music-button" onclick="toggleMusic()">🎵 Music On</button>
         </div>
     </div>
     </main>
