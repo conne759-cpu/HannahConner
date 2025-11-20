@@ -1,10 +1,12 @@
-// Audio System for Tic Tac Toe Game using Web Audio API
+// Audio System for Tic Tac Toe Game
 class GameAudio {
   constructor() {
     this.audioContext = null;
     this.isEnabled = true;
     this.backgroundMusicPlaying = false;
+    this.sounds = {};
     this.initAudio();
+    this.loadSounds();
   }
 
   initAudio() {
@@ -14,6 +16,41 @@ class GameAudio {
     } catch (e) {
       console.warn('Web Audio API not supported:', e);
       this.isEnabled = false;
+    }
+  }
+
+  loadSounds() {
+    // Load actual audio files
+    const soundFiles = {
+      win: 'audio/win.wav',
+      lose: 'audio/lose.wav',
+      move: 'audio/move.wav'
+    };
+
+    try {
+      Object.keys(soundFiles).forEach(key => {
+        this.sounds[key] = new Audio(soundFiles[key]);
+        this.sounds[key].volume = 0.5;
+        this.sounds[key].load();
+      });
+      console.log('Audio files loaded successfully');
+    } catch (e) {
+      console.warn('Failed to load audio files:', e);
+    }
+  }
+
+  playSound(soundName) {
+    if (!this.isEnabled) return;
+    
+    try {
+      if (this.sounds[soundName]) {
+        // Clone the audio to allow multiple overlapping plays
+        const sound = this.sounds[soundName].cloneNode();
+        sound.volume = 0.5;
+        sound.play().catch(e => console.warn(`Failed to play ${soundName}:`, e));
+      }
+    } catch (e) {
+      console.warn(`Error playing ${soundName}:`, e);
     }
   }
 
@@ -53,68 +90,43 @@ class GameAudio {
     }
   }
 
-  // Game sound effects
+  // Game sound effects using actual audio files
   playClickSound() {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      this.playTone(800, 100, 'square', 0.2);
-    }).catch(e => console.warn('Click sound failed:', e));
+    this.playSound('move');
   }
 
   playPlayerMove() {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      // Happy bulldog sound effect (ascending tones)
-      this.playTone(523, 150, 'sine', 0.3); // C5
-      setTimeout(() => this.playTone(659, 150, 'sine', 0.3), 100); // E5
-    }).catch(e => console.warn('Player move sound failed:', e));
+    this.playSound('move');
   }
 
   playComputerMove() {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      // UMN sound effect (descending tones)
-      this.playTone(440, 150, 'triangle', 0.25); // A4
-      setTimeout(() => this.playTone(349, 150, 'triangle', 0.25), 100); // F4
-    }).catch(e => console.warn('Computer move sound failed:', e));
+    this.playSound('move');
   }
 
   playWinSound(isPlayer = true) {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      if (isPlayer) {
-        // Bulldogs win - triumphant fanfare
-        const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
-        notes.forEach((note, index) => {
-          setTimeout(() => this.playTone(note, 300, 'sine', 0.4), index * 150);
-        });
-      } else {
-        // UMN win - different melody
-        const notes = [440, 392, 349, 294]; // A4, G4, F4, D4
-        notes.forEach((note, index) => {
-          setTimeout(() => this.playTone(note, 250, 'triangle', 0.35), index * 120);
-        });
-      }
-    }).catch(e => console.warn('Win sound failed:', e));
+    if (isPlayer) {
+      // Player wins - play win sound
+      this.playSound('win');
+    } else {
+      // Computer wins - play lose sound
+      this.playSound('lose');
+    }
   }
 
   playTieSound() {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      // Neutral tie sound
-      this.playTone(523, 200, 'sine', 0.25);
-      setTimeout(() => this.playTone(523, 200, 'sine', 0.25), 150);
-    }).catch(e => console.warn('Tie sound failed:', e));
+    // Use move sound for tie as neutral sound
+    this.playSound('move');
   }
 
   playGameStart() {
     if (!this.isEnabled) return;
-    this.resumeAudioContext().then(() => {
-      // Game start sound
-      this.playTone(440, 200, 'sawtooth', 0.3);
-      setTimeout(() => this.playTone(554, 200, 'sawtooth', 0.3), 100);
-      setTimeout(() => this.playTone(659, 300, 'sawtooth', 0.3), 200);
-    }).catch(e => console.warn('Game start sound failed:', e));
+    // Use move sound for game start
+    this.playSound('move');
   }
 
   // Background music - simple loop
@@ -184,3 +196,32 @@ class GameAudio {
 
 // Export for use in other files
 window.GameAudio = GameAudio;
+
+// Initialize game audio when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.gameAudio = new GameAudio();
+    console.log('Game audio initialized');
+  });
+} else {
+  window.gameAudio = new GameAudio();
+  console.log('Game audio initialized');
+}
+
+// Global function to toggle music/sound
+window.toggleMusic = function() {
+  if (window.gameAudio) {
+    const isEnabled = window.gameAudio.toggleMute();
+    const button = document.getElementById('musicButton');
+    if (button) {
+      if (isEnabled) {
+        button.textContent = '🎵 Music On';
+        button.classList.remove('muted');
+      } else {
+        button.textContent = '🔇 Music Off';
+        button.classList.add('muted');
+      }
+    }
+    console.log('Audio ' + (isEnabled ? 'enabled' : 'disabled'));
+  }
+};
