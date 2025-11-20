@@ -184,10 +184,208 @@
             border-color: #666;
         }
 
+        .winner-points {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+
+        /* Score and Level Display */
+        .score-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(184, 134, 11, 0.1);
+            border-radius: 10px;
+            border: 2px solid #B8860B;
+        }
+
+        .score-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            color: #800020;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .score-value, .level-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #800020;
+        }
+
+        /* Level Progress Bar */
+        .level-progress-container {
+            margin: 20px 0;
+        }
+
+        .level-progress-bar {
+            width: 100%;
+            height: 25px;
+            background: rgba(184, 134, 11, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #B8860B;
+        }
+
+        .level-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            transition: width 0.5s ease, background-color 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .level-progress-text {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.9em;
+            color: #800020;
+            font-weight: 600;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+        }
+
+        .stat-item {
+            font-size: 0.95em;
+            color: #800020;
+        }
+
+        .stat-win {
+            color: #4CAF50;
+        }
+
+        .stat-loss {
+            color: #f44336;
+        }
+
+        .stat-tie {
+            color: #FF9800;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .pulse {
+            animation: pulse 0.3s ease;
+        }
+
+        .cell.winner {
+            background-color: #FFD700 !important;
+            animation: winner-glow 1s ease infinite;
+        }
+
+        @keyframes winner-glow {
+            0%, 100% {
+                box-shadow: 0 0 10px #FFD700;
+            }
+            50% {
+                box-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700;
+            }
+        }
+
+        /* Points Animation */
+        .points-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5em;
+            font-weight: bold;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            z-index: 100;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .points-animation.show {
+            opacity: 1;
+            transform: translate(-50%, -100%);
+        }
+
+        /* Level Up Message */
+        .level-up-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: levelUpBounce 0.5s ease;
+        }
+
+        .level-up-content {
+            text-align: center;
+            color: white;
+        }
+
+        .level-up-content h2 {
+            font-size: 2.5em;
+            margin: 0 0 10px 0;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .level-up-content p {
+            font-size: 1.5em;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .level-up-subtitle {
+            font-size: 1.1em !important;
+            opacity: 0.9;
+        }
+
+        @keyframes levelUpBounce {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        .level-up-message.fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+        }
+
         @media (max-width: 600px) {
             .game-container {
                 padding: 20px;
-                margin: 20px;
+                margin: 10px;
             }
             
             .game-board {
@@ -200,7 +398,30 @@
             }
 
             h1 {
-                font-size: 2em;
+                font-size: 1.8em;
+            }
+
+            .score-display {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .game-stats {
+                gap: 10px;
+                font-size: 0.85em;
+            }
+
+            .level-up-content h2 {
+                font-size: 1.8em;
+            }
+
+            .level-up-content p {
+                font-size: 1.2em;
+            }
+
+            .reset-button, .music-button {
+                font-size: 0.9em;
+                padding: 10px 20px;
             }
         }
     </style>
@@ -235,9 +456,10 @@
             <button class="cell" data-index="8"></button>
         </div>
         <div id="winnerMessage"></div>
-        <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;">
+        <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:20px;">
             <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
             <button id="musicButton" class="music-button" onclick="toggleMusic()">🎵 Music On</button>
+            <button class="reset-button" onclick="resetProgress()" style="background:linear-gradient(45deg, #f44336, #e91e63);">🔄 Reset Progress</button>
         </div>
     </div>
     </main>
