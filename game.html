@@ -456,9 +456,12 @@
             <button class="cell" data-index="8"></button>
         </div>
         <div id="winnerMessage"></div>
+        <div id="audioStatus" style="margin:10px 0;font-size:0.9em;color:#FF9800;display:none;">
+            🔊 Click anywhere to enable sound
+        </div>
         <div style="display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:20px;">
             <button class="reset-button" onclick="resetGame()">🔄 New Game</button>
-            <button id="musicButton" class="music-button" onclick="toggleMusic()">🎵 Music On</button>
+            <button id="musicButton" class="music-button" onclick="toggleMusic()">🎵 Sound On</button>
             <button class="reset-button" onclick="resetProgress()" style="background:linear-gradient(45deg, #f44336, #e91e63);">🔄 Reset Progress</button>
         </div>
     </div>

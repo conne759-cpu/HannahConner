@@ -5,8 +5,10 @@ class GameAudio {
     this.isEnabled = true;
     this.backgroundMusicPlaying = false;
     this.sounds = {};
+    this.audioUnlocked = false;
     this.initAudio();
     this.loadSounds();
+    this.setupAudioUnlock();
   }
 
   initAudio() {
@@ -31,9 +33,20 @@ class GameAudio {
       Object.keys(soundFiles).forEach(key => {
         this.sounds[key] = new Audio(soundFiles[key]);
         this.sounds[key].volume = 0.5;
+        this.sounds[key].preload = 'auto';
+        
+        // Add event listeners for debugging
+        this.sounds[key].addEventListener('loadeddata', () => {
+          console.log(`✓ Audio loaded: ${key}.wav`);
+        });
+        
+        this.sounds[key].addEventListener('error', (e) => {
+          console.error(`✗ Failed to load ${key}.wav:`, e);
+        });
+        
         this.sounds[key].load();
       });
-      console.log('Audio files loaded successfully');
+      console.log('Audio files loading...');
     } catch (e) {
       console.warn('Failed to load audio files:', e);
     }
@@ -47,11 +60,81 @@ class GameAudio {
         // Clone the audio to allow multiple overlapping plays
         const sound = this.sounds[soundName].cloneNode();
         sound.volume = 0.5;
-        sound.play().catch(e => console.warn(`Failed to play ${soundName}:`, e));
+        
+        // Play with promise handling for better browser compatibility
+        const playPromise = sound.play();
+        
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              console.log(`Playing: ${soundName}`);
+            })
+            .catch(error => {
+              // Auto-play was prevented - this is normal on first load
+              if (error.name === 'NotAllowedError') {
+                console.warn(`Audio blocked by browser - user interaction needed`);
+              } else {
+                console.warn(`Failed to play ${soundName}:`, error);
+              }
+            });
+        }
+      } else {
+        console.warn(`Sound not found: ${soundName}`);
       }
     } catch (e) {
       console.warn(`Error playing ${soundName}:`, e);
     }
+  }
+
+  // Setup audio unlock on first user interaction
+  setupAudioUnlock() {
+    // Show audio status message initially
+    const statusMsg = document.getElementById('audioStatus');
+    if (statusMsg) {
+      statusMsg.style.display = 'block';
+    }
+    
+    const unlockAudio = () => {
+      if (this.audioUnlocked) return;
+      
+      console.log('Attempting to unlock audio...');
+      
+      // Try to play and immediately pause each sound
+      Object.keys(this.sounds).forEach(key => {
+        if (this.sounds[key]) {
+          const playPromise = this.sounds[key].play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                this.sounds[key].pause();
+                this.sounds[key].currentTime = 0;
+                console.log(`✓ Audio unlocked: ${key}`);
+              })
+              .catch(() => {
+                console.log(`Waiting for interaction to unlock: ${key}`);
+              });
+          }
+        }
+      });
+      
+      this.audioUnlocked = true;
+      console.log('Audio system unlocked!');
+      
+      // Hide the audio status message
+      if (statusMsg) {
+        statusMsg.style.display = 'none';
+      }
+      
+      // Remove the event listeners after unlock
+      document.removeEventListener('click', unlockAudio);
+      document.removeEventListener('touchstart', unlockAudio);
+      document.removeEventListener('keydown', unlockAudio);
+    };
+    
+    // Add multiple event listeners for first interaction
+    document.addEventListener('click', unlockAudio, { once: true });
+    document.addEventListener('touchstart', unlockAudio, { once: true });
+    document.addEventListener('keydown', unlockAudio, { once: true });
   }
 
   // Resume audio context if suspended (required by browsers)
@@ -213,15 +296,23 @@ window.toggleMusic = function() {
   if (window.gameAudio) {
     const isEnabled = window.gameAudio.toggleMute();
     const button = document.getElementById('musicButton');
+    const statusMsg = document.getElementById('audioStatus');
+    
     if (button) {
       if (isEnabled) {
-        button.textContent = '🎵 Music On';
+        button.textContent = '🎵 Sound On';
         button.classList.remove('muted');
       } else {
-        button.textContent = '🔇 Music Off';
+        button.textContent = '🔇 Sound Off';
         button.classList.add('muted');
       }
     }
+    
+    // Hide the audio status message after first interaction
+    if (statusMsg && window.gameAudio.audioUnlocked) {
+      statusMsg.style.display = 'none';
+    }
+    
     console.log('Audio ' + (isEnabled ? 'enabled' : 'disabled'));
   }
 };
