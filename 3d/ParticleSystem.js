@@ -8,7 +8,7 @@ class ParticleSystem {
   
   // Win celebration particles
   createWinParticles(position) {
-    const particleCount = 100;
+    const particleCount = 150; // More particles!
     const particles = new THREE.Group();
     
     for (let i = 0; i < particleCount; i++) {
@@ -22,14 +22,15 @@ class ParticleSystem {
       const particle = new THREE.Mesh(geometry, material);
       particle.position.copy(position);
       
-      // Random velocity
+      // Random velocity with more upward force
       particle.velocity = new THREE.Vector3(
-        (Math.random() - 0.5) * 0.2,
-        Math.random() * 0.3,
-        (Math.random() - 0.5) * 0.2
+        (Math.random() - 0.5) * 0.25,
+        Math.random() * 0.4 + 0.2, // More upward
+        (Math.random() - 0.5) * 0.25
       );
       
-      particle.life = 60; // frames
+      particle.life = 80; // Lasts longer
+      particle.initialLife = 80;
       particles.add(particle);
     }
     
@@ -38,6 +39,85 @@ class ParticleSystem {
       group: particles,
       type: 'confetti',
       update: this.updateConfetti
+    });
+    
+    return particles;
+  }
+  
+  // Fireworks effect for major wins
+  createFireworks(position, color = 0x00ff88) {
+    const particleCount = 80;
+    const particles = new THREE.Group();
+    
+    for (let i = 0; i < particleCount; i++) {
+      const geometry = new THREE.SphereGeometry(0.04, 8, 8);
+      const material = new THREE.MeshBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 1
+      });
+      
+      const particle = new THREE.Mesh(geometry, material);
+      particle.position.copy(position);
+      
+      // Circular explosion pattern
+      const angle = (Math.PI * 2 * i) / particleCount;
+      const speed = 0.15 + Math.random() * 0.1;
+      particle.velocity = new THREE.Vector3(
+        Math.cos(angle) * speed,
+        Math.sin(angle) * speed + Math.random() * 0.1,
+        Math.sin(angle * 2) * speed
+      );
+      
+      particle.life = 60;
+      particle.initialLife = 60;
+      particles.add(particle);
+    }
+    
+    this.scene.add(particles);
+    this.particleGroups.push({
+      group: particles,
+      type: 'fireworks',
+      update: this.updateFireworks
+    });
+    
+    return particles;
+  }
+  
+  // Level up particles
+  createLevelUpEffect(position) {
+    const particleCount = 100;
+    const particles = new THREE.Group();
+    
+    for (let i = 0; i < particleCount; i++) {
+      const geometry = new THREE.SphereGeometry(0.04, 8, 8);
+      const material = new THREE.MeshBasicMaterial({
+        color: 0xFFD700, // Gold color
+        transparent: true,
+        opacity: 1
+      });
+      
+      const particle = new THREE.Mesh(geometry, material);
+      particle.position.copy(position);
+      particle.position.y -= 2; // Start below
+      
+      // Upward spiral
+      particle.velocity = new THREE.Vector3(
+        Math.cos(i * 0.5) * 0.1,
+        0.15 + Math.random() * 0.1,
+        Math.sin(i * 0.5) * 0.1
+      );
+      
+      particle.life = 100;
+      particle.initialLife = 100;
+      particles.add(particle);
+    }
+    
+    this.scene.add(particles);
+    this.particleGroups.push({
+      group: particles,
+      type: 'levelup',
+      update: this.updateLevelUp
     });
     
     return particles;
@@ -205,12 +285,45 @@ class ParticleSystem {
   updateConfetti(particles) {
     particles.children.forEach(particle => {
       particle.position.add(particle.velocity);
-      particle.velocity.y -= 0.005; // Gravity
-      particle.rotation.x += 0.1;
-      particle.rotation.y += 0.1;
+      particle.velocity.y -= 0.008; // Stronger gravity
+      particle.rotation.x += 0.15;
+      particle.rotation.y += 0.15;
+      particle.rotation.z += 0.1;
       
       particle.life--;
-      particle.material.opacity = particle.life / 60;
+      particle.material.opacity = Math.max(0, particle.life / particle.initialLife);
+    });
+  }
+  
+  updateFireworks(particles) {
+    particles.children.forEach(particle => {
+      particle.position.add(particle.velocity);
+      particle.velocity.multiplyScalar(0.97); // Deceleration
+      particle.velocity.y -= 0.01; // Gravity
+      
+      particle.life--;
+      particle.material.opacity = Math.max(0, particle.life / particle.initialLife);
+      
+      // Twinkle effect
+      particle.scale.setScalar(1 + Math.sin(particle.life * 0.5) * 0.3);
+    });
+  }
+  
+  updateLevelUp(particles) {
+    particles.children.forEach(particle => {
+      particle.position.add(particle.velocity);
+      particle.velocity.y += 0.002; // Slight upward acceleration
+      
+      // Spiral motion
+      const angle = particle.life * 0.1;
+      particle.position.x += Math.cos(angle) * 0.02;
+      particle.position.z += Math.sin(angle) * 0.02;
+      
+      particle.life--;
+      particle.material.opacity = Math.max(0, particle.life / particle.initialLife);
+      
+      // Pulsing scale
+      particle.scale.setScalar(1 + Math.sin(particle.life * 0.2) * 0.5);
     });
   }
   

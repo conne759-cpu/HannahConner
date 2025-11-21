@@ -105,6 +105,11 @@ class Game3D {
         this.particleSystem = new ParticleSystem(this.scene);
       }
       
+      // Initialize visual effects
+      if (typeof VisualEffects !== 'undefined') {
+        this.visualEffects = new VisualEffects(this.camera, this.renderer);
+      }
+      
       // Add back to menu button
       if (typeof GameModeSelector !== 'undefined') {
         const selector = new GameModeSelector();
@@ -537,6 +542,11 @@ class Game3D {
       } else {
         piece.position.y = targetY;
         piece.scale.set(1, 1, 1);
+        
+        // Add sparkle effect when piece lands
+        if (this.particleSystem) {
+          this.particleSystem.createSparkles(position);
+        }
       }
     };
     dropAnimation();
@@ -674,15 +684,45 @@ class Game3D {
       title = perfectWin ? '🎉 PERFECT WIN! 🎉' : '🎉 YOU WIN! 🎉';
       this.gamesWon++;
       if (this.audio) this.audio.playSound('win');
+      
+      // Visual effects for win
+      if (this.visualEffects) {
+        this.visualEffects.winCelebration();
+      }
+      
+      // Particle effects for win
+      if (this.particleSystem) {
+        this.particleSystem.createWinParticles(new THREE.Vector3(0, 2, 0));
+        // Add fireworks
+        setTimeout(() => this.particleSystem.createFireworks(new THREE.Vector3(-1.5, 2, 0), 0x00ff88), 300);
+        setTimeout(() => this.particleSystem.createFireworks(new THREE.Vector3(1.5, 2, 0), 0x00d4ff), 600);
+      }
+      
     } else if (winner === 'O') {
       points = this.POINTS.LOSS;
       title = '😔 YOU LOST';
       this.gamesLost++;
       if (this.audio) this.audio.playSound('lose');
+      
+      // Visual effects for loss
+      if (this.visualEffects) {
+        this.visualEffects.loseEffect();
+      }
+      
+      // Particle effects for loss
+      if (this.particleSystem) {
+        this.particleSystem.createExplosion(new THREE.Vector3(0, 1, 0));
+      }
+      
     } else {
       points = this.POINTS.TIE;
       title = '🤝 IT\'S A TIE!';
       if (this.audio) this.audio.playSound('move');
+      
+      // Sparkles for tie
+      if (this.particleSystem) {
+        this.particleSystem.createSparkles(new THREE.Vector3(0, 1, 0));
+      }
     }
     
     this.addPoints(points, winner === 'X' ? 'Victory!' : winner === 'O' ? 'Defeat' : 'Tie');
@@ -709,9 +749,68 @@ class Game3D {
   checkLevelUp() {
     const newConfig = this.getCurrentLevelConfig();
     if (newConfig.level > this.currentLevel) {
+      const oldLevel = this.currentLevel;
       this.currentLevel = newConfig.level;
-      // Could add level-up animation here
+      
+      // Level up animation
+      this.showLevelUpAnimation(oldLevel, newConfig.level, newConfig.name);
+      
+      // Visual effects
+      if (this.visualEffects) {
+        this.visualEffects.levelUpEffect();
+      }
+      
+      // Particle effects
+      if (this.particleSystem) {
+        this.particleSystem.createLevelUpEffect(new THREE.Vector3(0, 2, 0));
+        setTimeout(() => this.particleSystem.createFireworks(new THREE.Vector3(0, 2, 0), 0xFFD700), 200);
+      }
+      
+      // Play sound
+      if (this.audio) {
+        this.audio.playSound('win');
+      }
     }
+  }
+  
+  showLevelUpAnimation(oldLevel, newLevel, levelName) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.95);
+      padding: 60px 80px;
+      border-radius: 20px;
+      border: 3px solid #FFD700;
+      z-index: 10000;
+      text-align: center;
+      animation: levelUpAppear 0.5s ease;
+      box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+    `;
+    
+    overlay.innerHTML = `
+      <div style="color: #FFD700; font-size: 24px; margin-bottom: 20px; font-weight: bold;">
+        ⭐ LEVEL UP! ⭐
+      </div>
+      <div style="color: white; font-size: 48px; font-weight: bold; margin: 20px 0;">
+        ${oldLevel} → ${newLevel}
+      </div>
+      <div style="color: #00ff88; font-size: 28px; margin-top: 20px;">
+        ${levelName}
+      </div>
+      <div style="color: rgba(255, 255, 255, 0.7); font-size: 16px; margin-top: 20px;">
+        AI is getting smarter!
+      </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    setTimeout(() => {
+      overlay.style.animation = 'levelUpDisappear 0.5s ease forwards';
+      setTimeout(() => overlay.remove(), 500);
+    }, 3000);
   }
   
   getCurrentLevelConfig() {
@@ -789,6 +888,11 @@ class Game3D {
     
     // Update controls
     if (this.controls) this.controls.update();
+    
+    // Update particle systems
+    if (this.particleSystem) {
+      this.particleSystem.update();
+    }
     
     // Rotate pieces slightly for effect
     this.pieces.forEach((piece, index) => {
