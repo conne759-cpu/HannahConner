@@ -278,9 +278,100 @@ class Game3DCube extends Game3D {
         requestAnimationFrame(scaleAnimation);
       } else {
         piece.scale.set(1, 1, 1);
+        
+        // Add sparkle effect when piece lands
+        if (this.particleSystem) {
+          this.particleSystem.createSparkles(position);
+        }
       }
     };
     scaleAnimation();
+  }
+  
+  // Enhanced AI for 3D Cube
+  makeAIMove() {
+    if (!this.gameActive) return;
+    
+    const levelConfig = this.getCurrentLevelConfig();
+    let move = null;
+    
+    // AI Power-Up Strategy (for higher levels)
+    if (this.powerUpSystem && this.currentLevel >= 3) {
+      this.considerAIPowerUps();
+    }
+    
+    // Smart 3D strategy based on difficulty
+    if (Math.random() < levelConfig.aiStrength) {
+      // Priority: Win > Block > Center (13) > Corners > Edges
+      move = this.findWinningMove('O') ||
+             this.findWinningMove('X') ||
+             (this.board[13] === '' ? 13 : null) || // Center of cube
+             this.findStrategic3DMove() ||
+             this.findCornerMove() ||
+             this.findEdgeMove() ||
+             this.findRandomMove();
+    } else {
+      move = this.findRandomMove();
+    }
+    
+    if (move !== null) {
+      // Play sound
+      if (this.audio) this.audio.playComputerMove();
+      
+      // Update board
+      this.board[move] = 'O';
+      this.cells[move].userData.empty = false;
+      
+      // Create piece
+      this.createPiece('O', move);
+      
+      // Check win
+      if (this.checkWinner('O')) {
+        this.endGame('O');
+        return;
+      }
+      
+      // Check tie
+      if (this.checkTie()) {
+        this.endGame('tie');
+        return;
+      }
+      
+      // Player turn
+      this.currentPlayer = 'X';
+      this.updateTurnIndicator();
+    }
+  }
+  
+  // Find strategic 3D moves
+  findStrategic3DMove() {
+    // Check for moves that create multiple winning threats
+    const available = [];
+    this.board.forEach((cell, index) => {
+      if (cell === '') {
+        // Count potential winning lines through this cell
+        let threats = 0;
+        for (let condition of this.winningConditions) {
+          if (condition.includes(index)) {
+            const [a, b, c] = condition;
+            const oCount = [this.board[a], this.board[b], this.board[c]].filter(cell => cell === 'O').length;
+            const emptyCount = [this.board[a], this.board[b], this.board[c]].filter(cell => cell === '').length;
+            if (oCount === 1 && emptyCount === 2) threats++;
+          }
+        }
+        if (threats > 0) {
+          available.push({ index, threats });
+        }
+      }
+    });
+    
+    if (available.length > 0) {
+      // Sort by threat count and return best
+      available.sort((a, b) => b.threats - a.threats);
+      return available[0].index;
+    }
+    
+    return null;
   }
   
   findRandomMove() {

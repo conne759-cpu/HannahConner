@@ -23,9 +23,9 @@ class GameModeSelector {
       cube3D: {
         name: '3D Cube',
         icon: '🎲',
-        description: '3x3x3 cube - ultimate challenge!',
+        description: '3x3x3 cube with 49 ways to win!',
         file: 'game3dcube.html',
-        difficulty: 'Expert'
+        difficulty: 'Expert 🔥'
       }
     };
     

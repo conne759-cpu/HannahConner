@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Cube Tic Tac Toe - Ultimate Challenge</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            cursor: pointer;
+        }
+
+        /* HUD Overlay */
+        .hud {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .hud > * {
+            pointer-events: auto;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .score-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+        }
+
+        .score-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        .score-value {
+            color: #00ff88;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .level-badge {
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            color: black;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Game Mode Badge */
+        .mode-badge {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid #FFD700;
+            padding: 10px 20px;
+            border-radius: 15px;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 16px;
+            text-shadow: 0 0 10px #FFD700;
+        }
+
+        /* Turn Indicator */
+        .turn-indicator {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .turn-indicator.your-turn {
+            border-color: #00ff88;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 136, 0.8); }
+        }
+
+        /* Layer Selector */
+        .layer-selector {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            z-index: 150;
+        }
+
+        .layer-title {
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 5px;
+            opacity: 0.8;
+        }
+
+        .layer-button {
+            width: 60px;
+            height: 60px;
+            background: rgba(42, 42, 42, 0.8);
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .layer-button:hover {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+            transform: scale(1.1);
+        }
+
+        .layer-button.active {
+            background: rgba(0, 255, 136, 0.3);
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .layer-label {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Game Stats */
+        .game-stats {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 5px;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-title {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .loading-subtitle {
+            color: #00ff88;
+            font-size: 20px;
+            margin-bottom: 50px;
+        }
+
+        .loading-bar {
+            width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Winner Overlay */
+        .winner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 500;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .winner-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 25px;
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            text-align: center;
+            animation: zoomIn 0.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes levelUpAppear {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes levelUpDisappear {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .winner-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .winner-points {
+            font-size: 32px;
+            color: #00ff88;
+            margin: 20px 0;
+        }
+
+        .winner-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .winner-button {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-again-button {
+            background: linear-gradient(135deg, #00ff88, #00d4ff);
+            color: black;
+        }
+
+        .menu-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .winner-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .layer-selector {
+                left: 10px;
+                padding: 10px;
+                gap: 10px;
+            }
+
+            .layer-button {
+                width: 50px;
+                height: 50px;
+                font-size: 14px;
+            }
+
+            .score-panel {
+                padding: 10px 15px;
+            }
+
+            .score-value {
+                font-size: 16px;
+            }
+
+            .game-stats {
+                bottom: 10px;
+                padding: 10px 20px;
+                gap: 15px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-title">🎲 3D CUBE MODE</div>
+        <div class="loading-subtitle">Ultimate Tic Tac Toe Challenge</div>
+        <div class="loading-bar">
+            <div class="loading-bar-fill" id="loadingBarFill" style="width: 0%"></div>
+        </div>
+        <div class="loading-text" id="loadingText">Initializing...</div>
+    </div>
+
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- HUD -->
+    <div class="hud">
+        <div class="top-bar">
+            <div class="score-panel">
+                <div class="score-item">
+                    <span class="level-badge" id="currentLevel">Level 1</span>
+                </div>
+                <div class="score-item">
+                    <span class="score-label">Score:</span>
+                    <span class="score-value" id="currentScore">0</span>
+                </div>
+            </div>
+
+            <div class="mode-badge">
+                🎲 3D CUBE MODE
+            </div>
+
+            <div class="turn-indicator" id="turnIndicator">
+                Your Turn
+            </div>
+        </div>
+    </div>
+
+    <!-- Layer Selector -->
+    <div class="layer-selector">
+        <div class="layer-title">LAYERS</div>
+        <button class="layer-button active" id="layer-all" onclick="selectLayer('all')">
+            <div>ALL</div>
+            <div class="layer-label">View All</div>
+        </button>
+        <button class="layer-button" id="layer-0" onclick="selectLayer(0)">
+            <div>1</div>
+            <div class="layer-label">Bottom</div>
+        </button>
+        <button class="layer-button" id="layer-1" onclick="selectLayer(1)">
+            <div>2</div>
+            <div class="layer-label">Middle</div>
+        </button>
+        <button class="layer-button" id="layer-2" onclick="selectLayer(2)">
+            <div>3</div>
+            <div class="layer-label">Top</div>
+        </button>
+    </div>
+
+    <!-- Game Stats -->
+    <div class="game-stats">
+        <div class="stat-item">
+            <div class="stat-value" id="winCount">0</div>
+            <div class="stat-label">Wins</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="loseCount">0</div>
+            <div class="stat-label">Losses</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value" id="gamesCount">0</div>
+            <div class="stat-label">Games</div>
+        </div>
+    </div>
+
+    <!-- Winner Overlay -->
+    <div class="winner-overlay" id="winnerOverlay">
+        <div class="winner-card">
+            <div class="winner-title" id="winnerTitle">🎉 YOU WIN! 🎉</div>
+            <div class="winner-points" id="winnerPoints">+100 Points</div>
+            <div class="winner-buttons">
+                <button class="winner-button play-again-button" onclick="resetGame()">
+                    🔄 Play Again
+                </button>
+                <button class="winner-button menu-button" onclick="window.location.href='menu.html'">
+                    📋 Menu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+    <!-- Game Scripts -->
+    <script defer src="js/audio-system.js"></script>
+    <script defer src="3d/ParticleSystem.js"></script>
+    <script defer src="3d/PowerUpSystem.js"></script>
+    <script defer src="3d/ThemeSystem.js"></script>
+    <script defer src="3d/VisualEffects.js"></script>
+    <script defer src="3d/GameModeSelector.js"></script>
+    <script defer src="3d/Game3D.js"></script>
+    <script defer src="3d/Game3DCube.js"></script>
+    
+    <script>
+        let game = null;
+        let currentLayerFilter = 'all';
+        
+        // Initialize game when scripts load
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                game = new Game3DCube();
+                
+                // Add back to menu button
+                if (typeof GameModeSelector !== 'undefined') {
+                    const selector = new GameModeSelector();
+                    selector.addBackButton('menu.html');
+                }
+            }, 100);
+        });
+        
+        // Layer selection
+        function selectLayer(layer) {
+            currentLayerFilter = layer;
+            
+            // Update button states
+            document.querySelectorAll('.layer-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`layer-${layer}`).classList.add('active');
+            
+            // Update cell visibility/opacity
+            if (game && game.cells) {
+                game.cells.forEach((cell, index) => {
+                    const z = Math.floor(index / 9);
+                    
+                    if (layer === 'all') {
+                        cell.material.opacity = 0.3;
+                    } else if (z === layer) {
+                        cell.material.opacity = 0.5;
+                        cell.material.emissiveIntensity = 0.2;
+                    } else {
+                        cell.material.opacity = 0.1;
+                        cell.material.emissiveIntensity = 0;
+                    }
+                });
+            }
+        }
+        
+        // Reset game
+        function resetGame() {
+            const overlay = document.getElementById('winnerOverlay');
+            if (overlay) overlay.style.display = 'none';
+            
+            if (game) {
+                // Clear pieces
+                game.pieces.forEach(piece => game.scene.remove(piece));
+                game.pieces = [];
+                
+                // Reset board
+                game.board = new Array(27).fill('');
+                game.cells.forEach(cell => {
+                    cell.userData.empty = true;
+                    cell.material.emissive.setHex(0x0a0a0a);
+                    cell.material.emissiveIntensity = 0;
+                });
+                
+                // Reset game state
+                game.gameActive = true;
+                game.currentPlayer = 'X';
+                game.moveCount = 0;
+                game.updateTurnIndicator();
+                
+                // Clear particles
+                if (game.particleSystem) {
+                    game.particleSystem.clear();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
