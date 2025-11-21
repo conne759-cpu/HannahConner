@@ -89,6 +89,28 @@ class Game3D {
       
       this.showLoadingProgress(100, 'Ready!');
       
+      // Initialize theme system
+      if (typeof ThemeSystem !== 'undefined') {
+        this.themeSystem = new ThemeSystem(this);
+        this.themeSystem.loadSavedTheme();
+      }
+      
+      // Initialize power-up system
+      if (typeof PowerUpSystem !== 'undefined') {
+        this.powerUpSystem = new PowerUpSystem(this);
+      }
+      
+      // Initialize particle system
+      if (typeof ParticleSystem !== 'undefined') {
+        this.particleSystem = new ParticleSystem(this.scene);
+      }
+      
+      // Add back to menu button
+      if (typeof GameModeSelector !== 'undefined') {
+        const selector = new GameModeSelector();
+        selector.addBackButton('menu.html');
+      }
+      
       setTimeout(() => {
         this.hideLoadingScreen();
         this.updateUI();
@@ -398,6 +420,11 @@ class Game3D {
     const levelConfig = this.getCurrentLevelConfig();
     let move = null;
     
+    // AI Power-Up Strategy (for higher levels)
+    if (this.powerUpSystem && this.currentLevel >= 3) {
+      this.considerAIPowerUps();
+    }
+    
     // Smart or random move based on difficulty
     if (Math.random() < levelConfig.aiStrength) {
       move = this.findWinningMove('O') ||
@@ -548,6 +575,67 @@ class Game3D {
       if (cell === '') available.push(index);
     });
     return available.length > 0 ? available[Math.floor(Math.random() * available.length)] : null;
+  }
+  
+  // AI Power-Up Strategy
+  considerAIPowerUps() {
+    if (!this.powerUpSystem || !this.gameActive) return;
+    
+    const aiStrength = this.getCurrentLevelConfig().aiStrength;
+    
+    // Time Freeze: Use when player is about to win (higher levels)
+    if (this.currentLevel >= 4 && Math.random() < aiStrength * 0.3) {
+      const playerWinningMove = this.findWinningMove('X');
+      if (playerWinningMove !== null) {
+        // Simulate using time freeze to prevent player win
+        console.log('AI considers Time Freeze');
+      }
+    }
+    
+    // X-Ray Vision: Use to scout ahead (expert levels)
+    if (this.currentLevel >= 5 && Math.random() < aiStrength * 0.2) {
+      // AI gets better at predicting player moves
+      console.log('AI uses X-Ray Vision strategy');
+    }
+    
+    // Double Move: Use when AI can win with two consecutive moves
+    if (this.currentLevel === 6 && Math.random() < 0.15) {
+      const aiWinningMove = this.findWinningMove('O');
+      if (aiWinningMove !== null) {
+        // High probability of winning
+        console.log('AI considers Double Move');
+      }
+    }
+    
+    // Shield: Use defensively when player has multiple winning threats
+    if (this.currentLevel >= 3 && Math.random() < aiStrength * 0.25) {
+      let threats = 0;
+      this.winningConditions.forEach(condition => {
+        const [a, b, c] = condition;
+        const xCount = [this.board[a], this.board[b], this.board[c]].filter(cell => cell === 'X').length;
+        const emptyCount = [this.board[a], this.board[b], this.board[c]].filter(cell => cell === '').length;
+        if (xCount === 2 && emptyCount === 1) threats++;
+      });
+      
+      if (threats >= 2) {
+        console.log('AI considers Shield (multiple threats detected)');
+      }
+    }
+    
+    // Bomb: Use to clear player's strategic positions (master level)
+    if (this.currentLevel === 6 && Math.random() < 0.1) {
+      const centerTaken = this.board[4] === 'X';
+      const cornersTaken = [0, 2, 6, 8].filter(i => this.board[i] === 'X').length;
+      
+      if (centerTaken || cornersTaken >= 2) {
+        console.log('AI considers Bomb (strategic disruption)');
+      }
+    }
+    
+    // Random Power-Up: Use occasionally for unpredictability
+    if (Math.random() < 0.05) {
+      console.log('AI considers Random Power-Up');
+    }
   }
   
   checkWinner(player) {

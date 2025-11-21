@@ -485,7 +485,17 @@
     </style>
     
     <script defer src="js/audio-system.js"></script>
+    <script defer src="3d/GameModeSelector.js"></script>
     <script defer src="js/game.js"></script>
     <script defer src="js/script.js"></script>
+    <script>
+        // Add back to menu button
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof GameModeSelector !== 'undefined') {
+                const selector = new GameModeSelector();
+                selector.addBackButton('menu.html');
+            }
+        });
+    </script>
 </body>
 </html>
