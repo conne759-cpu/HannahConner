@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Tic Tac Toe - Revolutionary Edition</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -372,7 +373,7 @@
 
     <!-- Back to Menu -->
     <button class="back-button" onclick="window.location.href='index.html'">
-        ← Back to Menu
+        <i class="fas fa-arrow-left"></i> Back to Menu
     </button>
 
     <!-- Game Canvas -->
@@ -427,9 +428,9 @@
     <!-- Winner Overlay -->
     <div class="winner-overlay" id="winnerOverlay">
         <div class="winner-card">
-            <div class="winner-title" id="winnerTitle">🎉 You Win! 🎉</div>
+            <div class="winner-title" id="winnerTitle"><i class="fas fa-trophy"></i> You Win! <i class="fas fa-trophy"></i></div>
             <div class="winner-points" id="winnerPoints">+100 Points</div>
-            <button class="play-again-btn" onclick="resetGame3D()">Play Again</button>
+            <button class="play-again-btn" onclick="resetGame3D()"><i class="fas fa-redo"></i> Play Again</button>
         </div>
     </div>
 

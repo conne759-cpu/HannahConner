@@ -50,7 +50,7 @@ class PowerUpSystem {
         'Place 2 pieces in one turn',
         150,
         3,
-        '⚡'
+        '<i class="fas fa-dice"></i>'
       ),
       bomb: new PowerUp(
         'bomb',
@@ -58,7 +58,7 @@ class PowerUpSystem {
         'Remove an opponent\'s piece',
         200,
         5,
-        '💣'
+        '<i class="fas fa-bomb"></i>'
       ),
       freeze: new PowerUp(
         'freeze',
@@ -66,7 +66,7 @@ class PowerUpSystem {
         'Skip opponent\'s next turn',
         175,
         4,
-        '❄️'
+        '<i class="fas fa-snowflake"></i>'
       ),
       shield: new PowerUp(
         'shield',
@@ -74,7 +74,7 @@ class PowerUpSystem {
         'Protect one of your pieces',
         150,
         4,
-        '🛡️'
+        '<i class="fas fa-shield-alt"></i>'
       ),
       undo: new PowerUp(
         'undo',
@@ -82,7 +82,7 @@ class PowerUpSystem {
         'Take back your last move',
         100,
         2,
-        '⏪'
+        '<i class="fas fa-undo"></i>'
       ),
       scan: new PowerUp(
         'scan',
@@ -90,7 +90,7 @@ class PowerUpSystem {
         'Reveal AI\'s next move',
         125,
         3,
-        '👁️'
+        '<i class="fas fa-eye"></i>'
       )
     };
     
@@ -150,7 +150,7 @@ class PowerUpSystem {
     `;
     
     const icon = document.createElement('div');
-    icon.textContent = powerUp.icon;
+    icon.innerHTML = powerUp.icon;
     icon.style.cssText = `
       font-size: 28px;
       margin-bottom: 2px;

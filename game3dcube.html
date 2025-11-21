@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Cube Tic Tac Toe - Ultimate Challenge</title>
     <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             margin: 0;
@@ -411,7 +412,7 @@
 <body>
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
-        <div class="loading-title">🎲 3D CUBE MODE</div>
+        <div class="loading-title"><i class="fas fa-dice-d6"></i> 3D CUBE MODE</div>
         <div class="loading-subtitle">Ultimate Tic Tac Toe Challenge</div>
         <div class="loading-bar">
             <div class="loading-bar-fill" id="loadingBarFill" style="width: 0%"></div>
@@ -436,7 +437,7 @@
             </div>
 
             <div class="mode-badge">
-                🎲 3D CUBE MODE
+                <i class="fas fa-dice-d6"></i> 3D CUBE MODE
             </div>
 
             <div class="turn-indicator" id="turnIndicator">
@@ -485,14 +486,14 @@
     <!-- Winner Overlay -->
     <div class="winner-overlay" id="winnerOverlay">
         <div class="winner-card">
-            <div class="winner-title" id="winnerTitle">🎉 YOU WIN! 🎉</div>
+            <div class="winner-title" id="winnerTitle"><i class="fas fa-trophy"></i> YOU WIN! <i class="fas fa-trophy"></i></div>
             <div class="winner-points" id="winnerPoints">+100 Points</div>
             <div class="winner-buttons">
                 <button class="winner-button play-again-button" onclick="resetGame()">
-                    🔄 Play Again
+                    <i class="fas fa-redo"></i> Play Again
                 </button>
                 <button class="winner-button menu-button" onclick="window.location.href='menu.html'">
-                    📋 Menu
+                    <i class="fas fa-bars"></i> Menu
                 </button>
             </div>
         </div>

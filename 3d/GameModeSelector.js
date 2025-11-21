@@ -6,7 +6,7 @@ class GameModeSelector {
     this.modes = {
       classic2D: {
         name: '2D Classic',
-        icon: '📋',
+        icon: '<i class="fas fa-table-cells"></i>',
         description: 'Classic Tic Tac Toe with levels & power-ups',
         file: 'game.html',
         difficulty: 'Easy to Master'
@@ -14,7 +14,7 @@ class GameModeSelector {
       
       classic3D: {
         name: '3D Grid',
-        icon: '🎮',
+        icon: '<i class="fas fa-gamepad"></i>',
         description: '3x3 grid in 3D space with immersive gameplay',
         file: 'game3d.html',
         difficulty: 'Intermediate'
@@ -22,7 +22,7 @@ class GameModeSelector {
       
       cube3D: {
         name: '3D Cube',
-        icon: '🎲',
+        icon: '<i class="fas fa-dice-d6"></i>',
         description: '3x3x3 cube with 49 ways to win!',
         file: 'game3dcube.html',
         difficulty: 'Expert 🔥'
@@ -119,7 +119,7 @@ class GameModeSelector {
     
     // Icon
     const icon = document.createElement('div');
-    icon.textContent = mode.icon;
+    icon.innerHTML = mode.icon;
     icon.style.cssText = `
       font-size: 80px;
       text-align: center;
@@ -225,7 +225,7 @@ class GameModeSelector {
     `;
     
     const title = document.createElement('h3');
-    title.textContent = '📊 Your Progress';
+    title.innerHTML = '<i class="fas fa-chart-line"></i> Your Progress';
     title.style.cssText = `
       color: #00ff88;
       font-size: 24px;
@@ -304,7 +304,7 @@ class GameModeSelector {
   
   addBackButton(targetPage = 'index.html') {
     const button = document.createElement('button');
-    button.innerHTML = '← Back to Menu';
+    button.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Menu';
     button.style.cssText = `
       position: fixed;
       top: 20px;

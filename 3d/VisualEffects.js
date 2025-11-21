@@ -167,7 +167,7 @@ class VisualEffects {
       z-index: 10000;
       animation: slowMoFade 1s ease;
     `;
-    overlay.textContent = '⏰ TIME FREEZE';
+    overlay.innerHTML = '<i class="fas fa-stopwatch"></i> TIME FREEZE';
     document.body.appendChild(overlay);
     
     setTimeout(() => overlay.remove(), duration);

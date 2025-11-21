@@ -9,7 +9,7 @@ class ThemeSystem {
     this.themes = {
       classic: {
         name: 'Classic',
-        icon: '🎨',
+        icon: '<i class="fas fa-palette"></i>',
         background: 0x0a0a0a,
         boardColor: 0x2a2a2a,
         cellColor: 0x1a1a1a,
@@ -26,7 +26,7 @@ class ThemeSystem {
       
       neon: {
         name: 'Neon Cyberpunk',
-        icon: '🌆',
+        icon: '<i class="fas fa-city"></i>',
         background: 0x0d0221,
         boardColor: 0x1a0f3d,
         cellColor: 0x0f0728,
@@ -44,7 +44,7 @@ class ThemeSystem {
       
       space: {
         name: 'Space',
-        icon: '🚀',
+        icon: '<i class="fas fa-rocket"></i>',
         background: 0x000510,
         boardColor: 0x1a1a2e,
         cellColor: 0x0f0f1e,
@@ -61,7 +61,7 @@ class ThemeSystem {
       
       nature: {
         name: 'Nature',
-        icon: '🌿',
+        icon: '<i class="fas fa-leaf"></i>',
         background: 0x1a3a1a,
         boardColor: 0x3d5a3d,
         cellColor: 0x2d4a2d,
@@ -78,7 +78,7 @@ class ThemeSystem {
       
       ice: {
         name: 'Ice',
-        icon: '❄️',
+        icon: '<i class="fas fa-snowflake"></i>',
         background: 0x0a1929,
         boardColor: 0x1e3a5f,
         cellColor: 0x0d2847,
@@ -96,7 +96,7 @@ class ThemeSystem {
       
       fire: {
         name: 'Fire',
-        icon: '🔥',
+        icon: '<i class="fas fa-fire"></i>',
         background: 0x1a0000,
         boardColor: 0x3d1010,
         cellColor: 0x2d0808,
@@ -180,7 +180,7 @@ class ThemeSystem {
       user-select: none;
     `;
     
-    button.textContent = theme.icon;
+    button.innerHTML = theme.icon;
     button.title = theme.name;
     
     button.addEventListener('click', () => this.applyTheme(themeKey));
@@ -299,7 +299,7 @@ class ThemeSystem {
     
     const message = document.createElement('div');
     message.id = 'themeMessage';
-    message.textContent = `🎨 ${themeName} Theme`;
+    message.innerHTML = `<i class="fas fa-palette"></i> ${themeName} Theme`;
     message.style.cssText = `
       position: fixed;
       top: 50%;

@@ -792,16 +792,16 @@ class Game3D {
     
     overlay.innerHTML = `
       <div style="color: #FFD700; font-size: 24px; margin-bottom: 20px; font-weight: bold;">
-        ⭐ LEVEL UP! ⭐
+        <i class="fas fa-star"></i> LEVEL UP! <i class="fas fa-star"></i>
       </div>
       <div style="color: white; font-size: 48px; font-weight: bold; margin: 20px 0;">
-        ${oldLevel} → ${newLevel}
+        ${oldLevel} <i class="fas fa-arrow-right"></i> ${newLevel}
       </div>
       <div style="color: #00ff88; font-size: 28px; margin-top: 20px;">
         ${levelName}
       </div>
       <div style="color: rgba(255, 255, 255, 0.7); font-size: 16px; margin-top: 20px;">
-        AI is getting smarter!
+        <i class="fas fa-brain"></i> AI is getting smarter!
       </div>
     `;
     
